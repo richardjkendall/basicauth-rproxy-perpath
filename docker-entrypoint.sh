@@ -5,6 +5,9 @@ envsubst '${REGION} ${TABLE} ${REALM} ${CACHE_FOLDER} ${CACHE_DURATION}' < /aws.
 
 # get folder configs
 FOLDERS=$(input=$PATHS /create-path-config.sh)
+echo "folder config for auth"
+echo "$FOLDERS"
+export FOLDERS
 envsubst '${UPSTREAM} ${FOLDERS}' < /apache.conf > /etc/apache2/sites-available/000-default.conf
 
 exec "$@"
