@@ -1,0 +1,2 @@
+account required        libpam-dynamo.so        ${REGION}  ${TABLE}  ${REALM}	${CACHE_FOLDER}	${CACHE_DURATION}
+auth    required        libpam-dynamo.so        ${REGION}  ${TABLE}  ${REALM}	${CACHE_FOLDER}	${CACHE_DURATION}
