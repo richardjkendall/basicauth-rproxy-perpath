@@ -9,7 +9,12 @@ AuthPAMService aws
 Require valid-user
 </Location>"
 
-#input='[{"folder":"/private"},{"folder":"/private2"}]'
+locationblockno="
+<Location {folder}>
+Require all granted
+</Location>"
+
+#input='[{"folder":"/", "auth": "yes"},{"folder":"/events", "auth": "no"}]'
 output=""
 for row in $(echo "${input}" | jq -r '.[] | @base64'); do
     _jq() {
@@ -17,7 +22,12 @@ for row in $(echo "${input}" | jq -r '.[] | @base64'); do
     }
 
    folder=$(_jq '.folder')
-   replaced=$(echo "$locationblock" | sed -e "s|{folder}|$folder|g")
+   authon=$(_jq '.auth')
+   if [ "$authon" == "yes" ]; then
+    replaced=$(echo "$locationblock" | sed -e "s|{folder}|$folder|g")
+   else
+    replaced=$(echo "$locationblockno" | sed -e "s|{folder}|$folder|g")
+   fi
    output="$output $replaced"
 done
 
