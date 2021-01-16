@@ -49,3 +49,8 @@ This would allow the ``/events`` path to be public while the root is protected.
 
 ### DynamoDB table
 The expected structure and content of the DynamoDB table is here https://github.com/richardjkendall/pam-dynamo
+
+## Headers
+The proxy strips the Authorization header sent by the client and does not send it to the upstream server.
+
+Instead a new header called 'X-Remote-User' is set to the username provided by the client and this is sent to the upstream server.
